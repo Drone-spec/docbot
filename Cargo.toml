@@ -1,0 +1,9 @@
+[package]
+name = "docbot"
+version = "0.1.0"
+edition = "2021"
+author = "Patrick Jenkins"
+description = "A tool to build out a basic write up"
+
+[dependencies]
+regex = { version = "1.11.1" }
