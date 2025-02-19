@@ -8,7 +8,7 @@ use std::path::Path;
 
 fn intro() {
     println!("Welcome to Doc bot~ It will attempt to parse a file and generate a rough review documents based on it.");
-    println!("Usage follows: doc <file>");
+    println!("Usage follows: doc <file> <output filename>");
 }
 static INTRO: &str = "# Title here \n
 Built by Docbot, Reviewed by XX\n\n
@@ -23,7 +23,13 @@ static WINDOWSFUNC: &str = "### Windows API calls\n\n";
 fn main() {
     intro();
 
-    let path = Path::new("validation.md");
+    let args: Vec<String> = env::args().collect();
+    if args.len() != 2 {
+        panic!("Incorrect use docbot <file>")
+    }
+    let file_path = &args[1];
+    let stringname = &args[2];
+    let path = Path::new(stringname);
     let display = path.display();
     let mut file = match File::create(&path) {
         Err(why) => panic!("Couldn't create to {}: {}", display, why),
@@ -34,11 +40,6 @@ fn main() {
         Ok(file) => println!("Successfully wrote Intro to {} ", display),
     }
 
-    let args: Vec<String> = env::args().collect();
-    if args.len() != 2 {
-        panic!("Incorrect use docbot <file>")
-    }
-    let file_path = &args[1];
     println!("Using {} as requested.", file_path);
     let reviewcode: String = fs::read_to_string(file_path).expect("Could not read String.");
     //println!("{}", reviewcode);
